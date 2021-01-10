@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.saveme">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SaveMe">
-        <activity android:name=".LaporActivity"></activity>
+        <activity android:name=".AmbulanceSuccessActivity"></activity>
+        <activity android:name=".WaitingAmbulanceActivity" />
+        <activity android:name=".LaporActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".DaftarActivity" />
         <activity android:name=".MainActivity">

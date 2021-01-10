@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.saveme.Api.Client;
@@ -20,8 +21,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DaftarActivity extends AppCompatActivity {
-    Button btnMasuk,btnDaftar;
+    Button btnDaftar;
     EditText textNama,textEmail,textPassword,textNoHP;
+    TextView textMasuk;
     Interface mApiInterface;
 
     @Override
@@ -33,8 +35,17 @@ public class DaftarActivity extends AppCompatActivity {
         textEmail = (EditText) findViewById(R.id.editEmail);
         textPassword = (EditText) findViewById(R.id.editPassword);
         textNoHP = (EditText) findViewById(R.id.editNoHP);
+
+        textMasuk = (TextView) findViewById(R.id.textMasuk);
         btnDaftar = (Button) findViewById(R.id.btnDaftar);
         mApiInterface = Client.getClient().create(Interface.class);
+
+        textMasuk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         btnDaftar.setOnClickListener(new View.OnClickListener() {
             @Override

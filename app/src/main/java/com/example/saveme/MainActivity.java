@@ -9,9 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.saveme.Api.Serializer;
 import com.example.saveme.Model.Auth.Login;
 import com.example.saveme.Api.Client;
 import com.example.saveme.Api.Interface;
@@ -22,7 +22,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnDaftar, btnMasuk;
+    Button btnMasuk;
+    TextView textDaftar;
     EditText textEmail, textPassword;
     Interface mApiInterface;
 
@@ -31,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnDaftar = (Button) findViewById(R.id.btnDaftar);
+        textDaftar = (TextView) findViewById(R.id.textDaftar);
         btnMasuk = (Button) findViewById(R.id.btnMasuk);
         textEmail = (EditText) findViewById(R.id.editEmail);
         textPassword = (EditText) findViewById(R.id.editPassword);
         mApiInterface = Client.getClient().create(Interface.class);
-        btnDaftar.setOnClickListener(new View.OnClickListener() {
+        textDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent halamanDaftar = new Intent(MainActivity.this, DaftarActivity.class);
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                             SharedPreferences sgSharedPref = getApplicationContext().getSharedPreferences("sg_shared_pref", getApplicationContext().MODE_PRIVATE);
                             SharedPreferences.Editor editor = sgSharedPref.edit();
                             String token = String.valueOf(response.body().getSuccess().getToken());
+
                             editor.putString("token", token);
                             editor.apply();
 
