@@ -6,50 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".LaporActivity">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="20dp"
-        android:text="Halo,"
-        android:textColor="#EE2655"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtPelapor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Armunanta"
-        android:textColor="#EE2655"
-        android:textSize="16sp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/textKeluar2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Keluar"
-        android:textColor="#EE2655"
-        android:textSize="16sp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/bg2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnFoto"

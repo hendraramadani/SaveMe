@@ -5,15 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.saveme.Model.Auth.Login;
+import com.example.saveme.Model.Auth.LoginData;
 
 public class HomeActivity extends AppCompatActivity {
     TextView textKeluar, textPelapor;
     Button btnLapor;
+    LoginData loginData = new LoginData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +32,10 @@ public class HomeActivity extends AppCompatActivity {
 
         textKeluar = (TextView) findViewById(R.id.textKeluar1);
         textPelapor = (TextView) findViewById(R.id.txtPelapor);
-
-        Login dataLogin = new Login();
-        textPelapor.setText(dataLogin.getName());
+////        Log.d("ISI LoginData: ", loginData.getName());
+//        Toast.makeText(getApplicationContext(),
+//                "HOME: " + loginData.getName(), Toast.LENGTH_SHORT).show();
+        textPelapor.setText(loginData.getName());
 
         btnLapor = (Button) findViewById(R.id.btnLapor);
 
@@ -47,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent halamanLapor = new Intent(HomeActivity.this, LaporActivity.class);
+                halamanLapor.putExtra("Pelapor", textPelapor.getText().toString());
                 startActivity(halamanLapor);
             }
         });

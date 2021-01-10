@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.saveme.Model.Auth.Login;
 import com.example.saveme.Api.Client;
 import com.example.saveme.Api.Interface;
+import com.example.saveme.Model.Auth.LoginData;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textDaftar;
     EditText textEmail, textPassword;
     Interface mApiInterface;
+    LoginData loginData = new LoginData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         textEmail = (EditText) findViewById(R.id.editEmail);
         textPassword = (EditText) findViewById(R.id.editPassword);
         mApiInterface = Client.getClient().create(Interface.class);
+
         textDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,19 +55,16 @@ public class MainActivity extends AppCompatActivity {
                 postLoginExe.enqueue(new Callback<Login>() {
                     @Override
                     public void onResponse(Call<Login> call, Response<Login> response) {
-                        Log.d("POST BERHASIL", "Foto Berhasil Terupload melalui API " + response.body().toString());
+//                        Log.d("POST BERHASIL", "Foto Berhasil Terupload melalui API " + response.body().toString());
                         if(response.isSuccessful()){
-                            Log.d("log softgain : ", String.valueOf(response.body().getSuccess().getToken()));
-                            Toast.makeText(getApplicationContext(),
-                                    "Login berhasil",Toast.LENGTH_SHORT).show();
-
+                            Log.d("log softgain : ", String.valueOf(response.body().getName()));
                             SharedPreferences sgSharedPref = getApplicationContext().getSharedPreferences("sg_shared_pref", getApplicationContext().MODE_PRIVATE);
                             SharedPreferences.Editor editor = sgSharedPref.edit();
-                            String token = String.valueOf(response.body().getSuccess().getToken());
-
+                            String token = String.valueOf(response.body().getSuccess());
+                            loginData.setName(response.body().getName());
                             editor.putString("token", token);
                             editor.apply();
-
+                            Toast.makeText(getApplicationContext(), "Login berhasil: " + loginData.getName(), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(MainActivity.this, HomeActivity.class));
                         }else{
                             Toast.makeText(getApplicationContext() ,"Login gagal",Toast.LENGTH_SHORT).show();

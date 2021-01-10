@@ -7,7 +7,7 @@ public class Login {
 
     @SerializedName("success")
     @Expose
-    private Token success;
+    private String success;
 
     @SerializedName("id")
     @Expose
@@ -33,11 +33,11 @@ public class Login {
         this.name = name;
     }
 
-    public void setSuccess(Token success) {
+    public void setSuccess(String success) {
         this.success = success;
     }
 
-    public Token getSuccess() {
+    public String getSuccess() {
         return success;
     }
 

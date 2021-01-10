@@ -35,6 +35,8 @@ import com.example.saveme.Api.Client;
 import com.example.saveme.Api.Interface;
 import com.example.saveme.Model.Auth.DataLaporan;
 import com.example.saveme.Model.Auth.Login;
+import com.example.saveme.Model.Auth.LoginData;
+import com.example.saveme.Model.Auth.RumahSakitData;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -49,13 +51,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LaporActivity extends AppCompatActivity implements LocationListener {
-    TextView textKeluar, textLongitude, textLatitude, textPelapor;
+    TextView textLongitude, textLatitude;
     EditText editKejadian, editDeskripsi;
     Button btnKirimLaporan, btnFoto;
     ImageView imageFoto;
-    Integer id = 0;
-    String namaFile, base64Foto;
+    Integer id = 0, toastCounter=0;
+    String namaFile, base64Foto, pelapor;
     Interface mApiInterface;
+    RumahSakitData rumahSakitData = new RumahSakitData();
 
     private LocationManager locationManager;
 //    private LocationListener locationListener;
@@ -71,21 +74,11 @@ public class LaporActivity extends AppCompatActivity implements LocationListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lapor);
         askWritePermission();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_PERMISSION);
-        }
-
-        textKeluar = (TextView) findViewById(R.id.textKeluar2);
         textLatitude = (TextView) findViewById(R.id.txtLat);
         textLongitude = (TextView) findViewById(R.id.txtLong);
-        textPelapor = (TextView) findViewById(R.id.txtPelapor);
 
-        Login dataLogin = new Login();
-        textPelapor.setText(dataLogin.getName());
-        id = dataLogin.getId();
+        pelapor = getIntent().getStringExtra("Pelapor");
 
         editKejadian = (EditText) findViewById(R.id.editKejadian);
         editDeskripsi = (EditText) findViewById(R.id.editDsekripsi);
@@ -97,20 +90,17 @@ public class LaporActivity extends AppCompatActivity implements LocationListener
         mApiInterface = Client.getClient().create(Interface.class);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_GPS, 0, this);
-
-
-
-        textKeluar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(LaporActivity.this, MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
-
-        textPelapor.setText(Login.class.getName());
 
         btnFoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +140,8 @@ public class LaporActivity extends AppCompatActivity implements LocationListener
     public void onLocationChanged(@NonNull Location location) {
         textLatitude.setText(String.valueOf(location.getLatitude()));
         textLongitude.setText(String.valueOf(location.getLongitude()));
-        Toast.makeText(LaporActivity.this, "GPS Captured", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(LaporActivity.this, "GPS Captured", Toast.LENGTH_SHORT).show();
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -192,17 +183,23 @@ public class LaporActivity extends AppCompatActivity implements LocationListener
     private void kirimLaporan(){
         if(base64Foto == null || editDeskripsi.getText().toString() == null || editKejadian.getText().toString() == null) {
 //            Toast.makeText(getBaseContext(), "ADA ISINYA", Toast.LENGTH_LONG).show();
-            Toast.makeText(getBaseContext(), "Belum Ada Foto", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Belum terisi semua", Toast.LENGTH_SHORT).show();
         }
         else {
-            mApiInterface.postLaporan(id, editKejadian.getText().toString(),
+            mApiInterface.postLaporan(pelapor, editKejadian.getText().toString(),
                     editDeskripsi.getText().toString(), Float.parseFloat(textLongitude.getText().toString()),
                     Float.parseFloat(textLatitude.getText().toString()), base64Foto)
                     .enqueue(new Callback<DataLaporan>() {
                 @Override
                 public void onResponse(Call<DataLaporan> call, Response<DataLaporan> response) {
                     if(response.isSuccessful()){
-                        Toast.makeText(getBaseContext(), "Laporan Berhasil Terkirim", Toast.LENGTH_SHORT).show();
+//                        rumahSakitData.setId(response.body().getId());
+//                        rumahSakitData.setNama(response.body().getRumahsakit());
+//                        Toast.makeText(getBaseContext(), "ID Pelapor: " + rumahSakitData.getId(), Toast.LENGTH_LONG).show();
+                        Intent halamanWaiting = new Intent(LaporActivity.this, WaitingAmbulanceActivity.class);
+                        halamanWaiting.putExtra("Id", response.body().getId());
+                        halamanWaiting.putExtra("NamaRumahSakit", response.body().getRumahsakit());
+                        startActivity(halamanWaiting);
                     }
                 }
 

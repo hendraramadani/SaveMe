@@ -2,9 +2,15 @@ package com.example.saveme.Model.Auth;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class DataLaporan {
+    @SerializedName("id")
+    private Integer id;
     @SerializedName("pelapor")
     private String pelapor;
+    @SerializedName("rumahsakit")
+    private String rumahsakit;
     @SerializedName("kejadian")
     private String kejadian;
     @SerializedName("deskripsi")
@@ -15,14 +21,51 @@ public class DataLaporan {
     private Float latitude;
     @SerializedName("foto")
     private String foto;
+    @SerializedName("action")
+    private Boolean action;
+    @SerializedName("updatedAt")
+    private Date updatedAt;
+    @SerializedName("createdAt")
+    private Date createdAt;
 
-    public DataLaporan(String pelapor, String kejadian, String deskripsi, Float longitude, Float latitude, String foto) {
-        this.pelapor = pelapor;
-        this.kejadian = kejadian;
-        this.deskripsi = deskripsi;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.foto = foto;
+    public Boolean getAction() {
+        return action;
+    }
+
+    public void setAction(Boolean action) {
+        this.action = action;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getRumahsakit() {
+        return rumahsakit;
+    }
+
+    public void setRumahsakit(String rumahsakit) {
+        this.rumahsakit = rumahsakit;
     }
 
     public void setPelapor(String pelapor) {
@@ -32,6 +75,7 @@ public class DataLaporan {
     public String getPelapor() {
         return pelapor;
     }
+
     public String getKejadian() {
         return kejadian;
     }
