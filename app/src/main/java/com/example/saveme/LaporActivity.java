@@ -183,7 +183,7 @@ public class LaporActivity extends AppCompatActivity implements LocationListener
     private void kirimLaporan(){
         if(base64Foto == null || editDeskripsi.getText().toString() == null || editKejadian.getText().toString() == null) {
 //            Toast.makeText(getBaseContext(), "ADA ISINYA", Toast.LENGTH_LONG).show();
-            Toast.makeText(getBaseContext(), "Belum terisi semua", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Belum Terisi Semua", Toast.LENGTH_SHORT).show();
         }
         else {
             mApiInterface.postLaporan(pelapor, editKejadian.getText().toString(),
@@ -195,7 +195,7 @@ public class LaporActivity extends AppCompatActivity implements LocationListener
                     if(response.isSuccessful()){
 //                        rumahSakitData.setId(response.body().getId());
 //                        rumahSakitData.setNama(response.body().getRumahsakit());
-//                        Toast.makeText(getBaseContext(), "ID Pelapor: " + rumahSakitData.getId(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Berhasil Terkirim", Toast.LENGTH_SHORT).show();
                         Intent halamanWaiting = new Intent(LaporActivity.this, WaitingAmbulanceActivity.class);
                         halamanWaiting.putExtra("Id", response.body().getId());
                         halamanWaiting.putExtra("NamaRumahSakit", response.body().getRumahsakit());

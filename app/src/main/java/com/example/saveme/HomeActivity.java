@@ -2,6 +2,7 @@ package com.example.saveme;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -42,6 +43,9 @@ public class HomeActivity extends AppCompatActivity {
         textKeluar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sgSharedPref = getApplicationContext().getSharedPreferences("sg_shared_pref", getApplicationContext().MODE_PRIVATE);
+                sgSharedPref.edit().clear().commit();
+                Toast.makeText(getApplicationContext(), "Keluar", Toast.LENGTH_SHORT).show();
                 Intent i=new Intent(HomeActivity.this, MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);

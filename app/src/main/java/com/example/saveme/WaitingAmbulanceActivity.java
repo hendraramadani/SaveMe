@@ -45,9 +45,10 @@ public class WaitingAmbulanceActivity extends AppCompatActivity {
         namaRumahSakit = getIntent().getStringExtra("NamaRumahSakit");
         idPelapor = getIntent().getIntExtra("Id", 0);
         mApiInterface = Client.getClient().create(Interface.class);
-        Toast.makeText(getApplicationContext(), "Id: " + idPelapor, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "Id: " + idPelapor, Toast.LENGTH_SHORT).show();
         Handler handler = new Handler();
 
+//        Thread for GET Method
         final Runnable r = new Runnable() {
             public void run() {
                 //Initiate your API here
@@ -57,15 +58,6 @@ public class WaitingAmbulanceActivity extends AppCompatActivity {
                         if(response.isSuccessful()){
                             List<DataLaporan> posts = response.body();
                             for ( DataLaporan post : posts) {
-//                        Toast.makeText(getApplicationContext(), "Id: " + post.getId() + "\nPelapor: "
-//                                + post.getPelapor() + "\nRumahSakit: " + post.getRumahsakit() + "\nKejadian: "
-//                                + post.getKejadian() + "Action: " + post.getAction() + "\n\n", Toast.LENGTH_LONG).show();
-//                                String content = "";
-//                                content += "Id: " + post.getId() + "\n";
-//                                content += "Pelapor: " + post.getPelapor() + "\n";
-//                                content += "Kejadian: " + post.getKejadian() + "\n";
-//                                content += "Action: " + post.getAction() + "\n\n";
-//                                debug.append(content);
                                 if(post.getId().equals(idPelapor)){
                                     if(post.getAction()){
                                         Intent halamanAmbulanceSuccess = new Intent(WaitingAmbulanceActivity.this, AmbulanceSuccessActivity.class);

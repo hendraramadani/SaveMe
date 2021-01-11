@@ -22,7 +22,9 @@ public interface Interface {
 
     @FormUrlEncoded
     @POST("user/register")
-    Call<Register> postRegister(@Field("name") String nama, @Field("email") String email, @Field("password") String password, @Field("phone") String NoHP, @Field("address") String alamat);
+    Call<Register> postRegister(@Field("name") String nama, @Field("email") String email,
+                                @Field("address") String alamat, @Field("phone") String NoHP,
+                                @Field("password") String password);
 
     @FormUrlEncoded
     @POST("laporan")

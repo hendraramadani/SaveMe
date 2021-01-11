@@ -29,7 +29,6 @@ public class AmbulanceSuccessActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(AmbulanceSuccessActivity.this, HomeActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
         });

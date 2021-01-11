@@ -22,7 +22,7 @@ import retrofit2.Response;
 
 public class DaftarActivity extends AppCompatActivity {
     Button btnDaftar;
-    EditText textNama,textEmail,textPassword,textNoHP;
+    EditText textNama,textEmail, textAlamat,textNoHP, textPassword;
     TextView textMasuk;
     Interface mApiInterface;
 
@@ -33,6 +33,7 @@ public class DaftarActivity extends AppCompatActivity {
 
         textNama = (EditText) findViewById(R.id.editNama);
         textEmail = (EditText) findViewById(R.id.editEmail);
+        textAlamat = (EditText) findViewById(R.id.editAlamat);
         textPassword = (EditText) findViewById(R.id.editPassword);
         textNoHP = (EditText) findViewById(R.id.editNoHP);
 
@@ -51,14 +52,14 @@ public class DaftarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Call<Register> postRegisterExe = mApiInterface.postRegister(textNama.getText().toString(), textEmail.getText().toString(),
-                        textPassword.getText().toString(), textNoHP.getText().toString(), "Jombang");
-//                Intent halamanMasuk = new Intent(DaftarActivity.this, MainActivity.class);
-//                startActivity(halamanMasuk);
-
+                        textAlamat.getText().toString(), textNoHP.getText().toString(), textPassword.getText().toString());
+//
                 postRegisterExe.enqueue(new Callback<Register>() {
                     @Override
                     public void onResponse(Call<Register> call, Response<Register> response) {
-                        Toast.makeText(getApplicationContext(), "Sukses", Toast.LENGTH_LONG).show();
+                        Intent halamanMasuk = new Intent(DaftarActivity.this, MainActivity.class);
+                        startActivity(halamanMasuk);
+                        Toast.makeText(getApplicationContext(), "Berhasil Mendaftar", Toast.LENGTH_LONG).show();
                     }
 
                     @Override

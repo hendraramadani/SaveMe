@@ -60,14 +60,16 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("log softgain : ", String.valueOf(response.body().getName()));
                             SharedPreferences sgSharedPref = getApplicationContext().getSharedPreferences("sg_shared_pref", getApplicationContext().MODE_PRIVATE);
                             SharedPreferences.Editor editor = sgSharedPref.edit();
-                            String token = String.valueOf(response.body().getSuccess());
+                            String token = response.body().getSuccess();
+
                             loginData.setName(response.body().getName());
+
                             editor.putString("token", token);
                             editor.apply();
-                            Toast.makeText(getApplicationContext(), "Login berhasil: " + loginData.getName(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Login Berhasil", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(MainActivity.this, HomeActivity.class));
                         }else{
-                            Toast.makeText(getApplicationContext() ,"Login gagal",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext() ,"Login Gagal",Toast.LENGTH_SHORT).show();
                         }
                     }
 
